@@ -1,0 +1,22 @@
+import random
+import json
+
+def generate_example(digits=3):
+    lo = 10**(digits - 1)
+    hi = 10**digits - 1
+    a = random.randint(lo, hi)
+    b = random.randint(lo, hi)
+    return {"input": f"{a}-{b}", "output": str(a - b)}
+
+def generate_dataset(n=50000, out_path=None, digits=3):
+    data = [generate_example(digits) for _ in range(n)]
+    
+    if out_path:
+        with open(out_path, "w") as f:
+            for d in data:
+                f.write(json.dumps(d) + "\n")
+    
+    return data
+
+if __name__ == "__main__":
+    generate_dataset(n=50000, out_path="subtract_ndigit.jsonl", digits=3)
